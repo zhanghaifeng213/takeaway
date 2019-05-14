@@ -8,9 +8,16 @@ import goods from 'components/goods/goods';
 import ratings from 'components/ratings/ratings';
 import seller from 'components/seller/seller';
 import record from 'components/record/record';
+import LoginAndReg from 'components/login-and-reg/index';
+import layout from 'components/layout/index';
 import store from './store'
 import 'common/stylus/index.styl';
 import http from '@/libs/httpRequest'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+
+
+Vue.use(Vuetify)
 Vue.http = Vue.prototype.$http = http
 Vue.use(VueRouter);
 Vue.use(VueResource);
@@ -18,16 +25,39 @@ window.eventBus = new Vue()
 var router = new VueRouter({
   linkActiveClass: 'active',
   routes: [
-    { path: '/', redirect: '/goods' },
-    { path: '/goods', component: goods },
-    { path: '/ratings', component: ratings },
-    { path: '/seller', component: seller },
-    { path: '/record', component: record }
+    { path: '/', component: LoginAndReg },
+    {
+      path: '/',
+      name: 'main',
+      component: layout,
+      children: [
+        {
+          path: '/goods',
+          name: 'goods',
+          component: goods,
+        },
+        {
+          path: '/ratings',
+          name: 'ratings',
+          component: ratings,
+        },
+        {
+          path: '/seller',
+          name: 'seller',
+          component: seller
+        },
+        {
+          path: '/record',
+          name: 'record',
+          component: record
+        }
+      ]
+    }
   ]
 });
 new Vue({
-  router,
   store,
+  router,
   render: h => h(App)
 }).$mount('#app');
 
