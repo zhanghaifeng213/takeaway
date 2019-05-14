@@ -11,6 +11,7 @@
 </template>
 <script>
 import { login } from "@/api/user";
+import { mapMutations } from "vuex";
 export default {
   data: () => ({
     valid: true,
@@ -24,6 +25,7 @@ export default {
   }),
 
   methods: {
+    ...mapMutations(["setUserName"]),
     validate() {
       if (this.$refs.form.validate()) {
         let data = {
@@ -33,6 +35,7 @@ export default {
         login(data).then(res => {
           if (res.data.code == 1) {
             this.$emit("message", res.data.msg);
+            this.setUserName(data.username);
             this.$router.push({
               name: "goods"
             });

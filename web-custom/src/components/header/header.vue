@@ -10,7 +10,7 @@
           <span class="name">{{seller.name}}</span>
         </div>
         <div class="description">
-          {{tableNum}}号桌
+          {{username}}
           <!-- {{seller.description}} / {{seller.deliveryTime}}分钟送达 -->
         </div>
         <!-- <div class="support" v-if="seller.supports">
@@ -82,7 +82,8 @@ export default {
   },
   computed: {
     ...mapState({
-      tableNum: state => state.tableNum
+      tableNum: state => state.tableNum,
+      username: state => state.userName
     })
   },
   data() {

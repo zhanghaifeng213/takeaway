@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     tableNum: sessionStorage.getItem("tableNum"),
-    tableNumId: sessionStorage.getItem("tableNumId")
+    tableNumId: sessionStorage.getItem("tableNumId"),
+    userName: ''
   },
   mutations: {
     setTable(state, payload) {
@@ -16,5 +17,8 @@ export default new Vuex.Store({
       state.tableNumId = payload.tableNumId
       state.tableNum = payload.tableNum
     },
+    setUserName(state, payload) {
+      state.userName = payload
+    }
   }
 })
