@@ -12,6 +12,7 @@ class Order {
     }
     // 顾客端新增订单 
     async add(ctx) {
+        const { user } = ctx.state;
         num++
         let orderNum = new Date().getTime()
         if (num >= 1000) {
@@ -24,10 +25,9 @@ class Order {
         orderNum += new Order().FillZero(num)
 
         const {
-            tableNum,
             list
         } = ctx.request.body;
-        if (list.length === 0 || !tableNum) return ctx.sendError(-1, '参数错误');
+        if (list.length === 0) return ctx.sendError(-1, '参数错误');
         var arr = []
         if (list.length > 0) {
             let arrlist = new Array(...list)
@@ -60,7 +60,7 @@ class Order {
             })
             const model = new OrderModel({
                 orderNum,
-                tableNum,
+                userId: user.id,
                 list: arr,
                 amount,
                 realAmount: amount
@@ -101,9 +101,9 @@ class Order {
         let {
             id
         } = ctx.query;
-        const result = await OrderModel.find({ tableNum: id, status: { $lt: 5 } }).sort('-created').populate({
-            path: 'tableNum',
-            select: '_id num'
+        const result = await OrderModel.find({ userId: id, status: { $lt: 5 } }).sort('-created').populate({
+            path: 'userId',
+            select: '_id username'
         })
         ctx.send({
             list: result,
@@ -120,8 +120,8 @@ class Order {
         pageSize = parseInt(pageSize)
         const maxNum = await OrderModel.find({ status: { $lt: 5 } }).countDocuments(true)
         const result = await OrderModel.find({ status: { $lt: 5 } }).sort('-created').populate({
-            path: 'tableNum',
-            select: '_id num'
+            path: 'userId',
+            select: '_id username'
         }).skip(pageNum * pageSize)
             .limit(pageSize) // mongoose 用于连表查询
         ctx.send({
@@ -139,8 +139,8 @@ class Order {
         pageSize = parseInt(pageSize)
         const maxNum = await OrderModel.countDocuments({ status: { $eq: 5 } })
         const result = await OrderModel.find({ status: { $eq: 5 } }).sort('-created').populate({
-            path: 'tableNum',
-            select: '_id num'
+            path: 'userId',
+            select: '_id username'
         }).skip(pageNum * pageSize)
             .limit(pageSize) // mongoose 用于连表查询
         ctx.send({
@@ -167,15 +167,12 @@ class Order {
     }
     // 根据订单号获取订单列表
     async getLists(ctx) {
-        let { orderNumbers } = ctx.request.body;
+        const { user } = ctx.state;
         // 参数需为数组
-        if (!orderNumbers || !Array.isArray(orderNumbers)) {
-            ctx.sendError('参数错误');
-            return;
-        }
-        const resData = await Promise.all(orderNumbers.map(orderNum => {
-            return OrderModel.findOne({ orderNum })
-        }));
+        // const resData = await Promise.all(orderNumbers.map(orderNum => {
+        //     return OrderModel.findOne({ orderNum })
+        // }));
+        const resData = await OrderModel.find({ userId: user.id, status: { $lt: 5 } })
         ctx.send(resData, '请求成功');
 
     }

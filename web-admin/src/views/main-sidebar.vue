@@ -2,45 +2,55 @@
   <aside class="wrap-sidebar">
     <ul>
       <li class="link">
-        <router-link :to="{name: 'types'}"><i class="el-icon-menu"></i> 菜品分类</router-link>
-      </li>
-      <li class="link">
-        <router-link :to="{name: 'dishes'}"><i class="el-icon-tickets"></i> 菜品列表</router-link>
-      </li>
-      <li class="link">
-        <router-link :to="{name: 'tables'}"><i class="el-icon-news"></i> 桌号管理</router-link>
-      </li>
-      <li class="link"
-          @click="clear">
-        <router-link :to="{name: 'order'}">
-          <i class="el-icon-document"></i> 订单管理<el-badge v-if="newOrderCount>0"
-                    :value="newOrderCount"></el-badge>
+        <router-link :to="{name: 'types'}">
+          <i class="el-icon-menu"></i> 菜品分类
         </router-link>
       </li>
       <li class="link">
-        <router-link :to="{name: 'income'}"><i class="el-icon-download"></i> 商家信息</router-link>
+        <router-link :to="{name: 'dishes'}">
+          <i class="el-icon-tickets"></i> 菜品列表
+        </router-link>
+      </li>
+      <!-- <li class="link">
+        <router-link :to="{name: 'tables'}"><i class="el-icon-news"></i> 桌号管理</router-link>
+      </li>-->
+      <li class="link" @click="clear">
+        <router-link :to="{name: 'order'}">
+          <i class="el-icon-document"></i> 订单管理
+          <el-badge v-if="newOrderCount>0" :value="newOrderCount"></el-badge>
+        </router-link>
       </li>
       <li class="link">
-        <router-link :to="{name: 'records'}"><i class="el-icon-date"></i> 历史订单</router-link>
-      </li>
-      <li class="link"
-          v-if="role==0">
-        <router-link :to="{name: 'info'}"><i class="el-icon-setting"></i> 用户管理</router-link>
+        <router-link :to="{name: 'income'}">
+          <i class="el-icon-download"></i> 商家信息
+        </router-link>
       </li>
       <li class="link">
-        <router-link :to="{name: 'meterial'}"><i class="el-icon-picture"></i> 素材管理</router-link>
+        <router-link :to="{name: 'records'}">
+          <i class="el-icon-date"></i> 历史订单
+        </router-link>
+      </li>
+      <li class="link" v-if="role==0">
+        <router-link :to="{name: 'info'}">
+          <i class="el-icon-setting"></i> 用户管理
+        </router-link>
+      </li>
+      <li class="link">
+        <router-link :to="{name: 'meterial'}">
+          <i class="el-icon-picture"></i> 素材管理
+        </router-link>
       </li>
     </ul>
   </aside>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 export default {
-  data () {
+  data() {
     return {
       newOrderCount: 0,
       currentIndex: 0
-    }
+    };
   },
   computed: {
     ...mapState({
@@ -48,17 +58,17 @@ export default {
     })
   },
   sockets: {
-    NEW_ORDER: function (data) {
-      this.newOrderCount++
+    NEW_ORDER: function(data) {
+      this.newOrderCount++;
     }
   },
   methods: {
-    clear () {
-      this.currentIndex = 3
-      this.newOrderCount = 0
+    clear() {
+      this.currentIndex = 3;
+      this.newOrderCount = 0;
     }
   }
-}
+};
 </script>
 <style lang="less" scoped>
 .wrap-sidebar {

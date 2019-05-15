@@ -26,7 +26,7 @@
           </tr>
           <tr v-for="(it,index) in item.list" :key="index">
             <td>
-              <img :src="it.menuDetail.img" width="20" height="20">
+              <img :src="imgUrlFormat(it.menuDetail.img)" width="20" height="20">
             </td>
             <td>{{it.menuDetail.name}}</td>
             <td>{{it.menuDetail.price}}</td>
@@ -41,6 +41,7 @@
 <script>
 import { getLists } from "@/api/order.js";
 import { mapState } from "vuex";
+import { imgUrlFormat } from "@/libs/tool";
 export default {
   data() {
     return {
@@ -55,7 +56,7 @@ export default {
   methods: {
     getList() {
       this.orderNumbers = JSON.parse(localStorage.getItem("orderNum"));
-      getLists({ orderNumbers: this.orderNumbers }).then(res => {
+      getLists().then(res => {
         if (res.data.code == 1) {
           this.lists = res.data.data;
           this.lists.forEach(el => {
@@ -102,6 +103,9 @@ export default {
           return "已完成";
           break;
       }
+    },
+    imgUrlFormat(url) {
+      return imgUrlFormat(url);
     }
   }
 };

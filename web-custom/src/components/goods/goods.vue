@@ -20,7 +20,7 @@
       <div class="foods-wrapper" ref="foodWrapper">
         <ul v-if="goods.length>0">
           <li v-for="item in goods" class="food-list food-list-hook">
-            <h1 class="title">{{item.name}}</h1>
+            <h1 class="texttitle">{{item.name}}</h1>
             <ul>
               <li v-for="food in item.foods" class="food-item border-1px">
                 <div class="icon">
@@ -241,9 +241,10 @@ export default {
     .menu-item {
       display: table;
       height: 54px;
-      width: 56px;
-      line-height: 14px;
+      width: 100%;
+      line-height: 54px;
       padding: 0 12px;
+      text-align: center;
       border-1px(rgba(7, 17, 27, 0.1));
 
       &.current {
@@ -304,7 +305,7 @@ export default {
   .foods-wrapper {
     flex: 1;
 
-    .title {
+    .texttitle {
       padding-left: 14px;
       height: 26px;
       line-height: 26px;

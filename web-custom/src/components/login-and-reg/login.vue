@@ -10,7 +10,7 @@
   </v-form>
 </template>
 <script>
-import { login } from "@/api/user";
+import { login, info } from "@/api/user";
 import { mapMutations } from "vuex";
 export default {
   data: () => ({
@@ -30,12 +30,21 @@ export default {
       if (this.$refs.form.validate()) {
         let data = {
           username: this.name,
-          password: this.pass
+          password: this.pass,
+          role: 1
         };
         login(data).then(res => {
           if (res.data.code == 1) {
             this.$emit("message", res.data.msg);
+            sessionStorage.setItem("token", res.data.data);
             this.setUserName(data.username);
+            sessionStorage.setItem("username", data.username);
+            info().then(res => {
+              if (res.data.code == 1) {
+                sessionStorage.setItem("userId", res.data.data.id);
+                this.setUserId(res.data.data.id);
+              }
+            });
             this.$router.push({
               name: "goods"
             });

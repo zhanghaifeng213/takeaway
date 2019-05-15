@@ -81,13 +81,14 @@ class User {
 
   // 用户登录
   async login(ctx) {
-    const { username, password } = ctx.request.body
+    const { username, password, role } = ctx.request.body
     if (!username || !password) {
       return ctx.sendError('000002', '参数不合法')
     }
     const result = await UserModel.findOne({
       username,
-      password: password
+      password: password,
+      role
     })
     if (result !== null) {
       const token = jsonwebtoken.sign(
@@ -114,7 +115,7 @@ class User {
       let data = {}
       const oldFile = await User.findById(id)
       if (oldFile.avatar != '/avatar/default.jpg') {
-        fs.unlink(join(__dirname, `../public${oldFile.avatar}`), function(err) {
+        fs.unlink(join(__dirname, `../public${oldFile.avatar}`), function (err) {
           if (err) return console.log(err)
           console.log('文件删除成功')
         })

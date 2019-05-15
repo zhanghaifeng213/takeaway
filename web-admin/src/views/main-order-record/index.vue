@@ -1,28 +1,22 @@
 <template>
   <div class="main-order-record">
-    <el-table 
-    :data="orderList" 
-    border 
-    show-summary
-    :summary-method="getSummaries"
-    style="width: 100%">
+    <el-table
+      :data="orderList"
+      border
+      show-summary
+      :summary-method="getSummaries"
+      style="width: 100%"
+    >
       <el-table-column type="index" width="80px"></el-table-column>
-      <el-table-column prop="tableNum" width="100px" sortable label="桌号">
-        <template slot-scope="scope" v-if="scope.row.tableNum">
-          {{scope.row.tableNum.num}}
-        </template>
+      <el-table-column prop="userId" width="100px" sortable label="用户">
+        <template slot-scope="scope" v-if="scope.row.userId">{{scope.row.userId.username}}</template>
       </el-table-column>
-      <el-table-column prop="orderNum" sortable label="订单号">
-      </el-table-column>
+      <el-table-column prop="orderNum" sortable label="订单号"></el-table-column>
       <el-table-column prop="created" sortable label="下单时间">
-        <template slot-scope="scope">
-          {{scope.row.created}}
-        </template>
+        <template slot-scope="scope">{{scope.row.created}}</template>
       </el-table-column>
-      <el-table-column prop="remark" label="备注">
-      </el-table-column>
-      <el-table-column prop="amount" label="实付金额">
-      </el-table-column>
+      <el-table-column prop="remark" label="备注"></el-table-column>
+      <el-table-column prop="amount" label="实付金额"></el-table-column>
       <el-table-column label="操作" width="80px">
         <template slot-scope="scope">
           <el-button size="mini" @click="view(scope.row)">查看</el-button>
@@ -36,8 +30,8 @@
       layout="total, sizes, prev, pager, next, jumper"
       :page-sizes="[10, 20, 50, 100]"
       :page-size="pageSize"
-      :total="total">
-    </el-pagination>
+      :total="total"
+    ></el-pagination>
     <order-detail v-if="orderVisible" ref="orderDetail"></order-detail>
   </div>
 </template>

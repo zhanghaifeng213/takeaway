@@ -249,7 +249,6 @@ export default {
         });
       });
       let obj = {
-        tableNum: this.tableNumId,
         list
       };
       addOrder(obj).then(res => {

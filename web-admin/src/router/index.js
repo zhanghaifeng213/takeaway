@@ -39,12 +39,12 @@ export default new Router({
           component: dishes,
           meta: { requireAuth: true }
         },
-        {
-          path: '/tables',
-          name: 'tables',
-          component: tables,
-          meta: { requireAuth: true }
-        },
+        // {
+        //   path: '/tables',
+        //   name: 'tables',
+        //   component: tables,
+        //   meta: { requireAuth: true }
+        // },
         {
           path: '/info',
           name: 'info',

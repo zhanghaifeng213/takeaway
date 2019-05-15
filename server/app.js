@@ -53,8 +53,6 @@ app
         /^\/image\/upload/i,
         /^\/image\/query/i,
         /^\/table\/list/i,
-        /^\/order\/add/i,
-        /^\/order\/lists/i,
         /^\/info\/list/i,
         /^\/socket.io/i
       ]

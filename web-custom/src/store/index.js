@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     tableNum: sessionStorage.getItem("tableNum"),
     tableNumId: sessionStorage.getItem("tableNumId"),
-    userName: ''
+    userName: sessionStorage.getItem("username"),
+    userId: sessionStorage.getItem("userId")
   },
   mutations: {
     setTable(state, payload) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     setUserName(state, payload) {
       state.userName = payload
+    },
+    setUserId(state, payload) {
+      state.userId = payload
     }
   }
 })
