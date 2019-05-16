@@ -21,4 +21,11 @@ const getLists = (data) => {
     data
   })
 }
+export const update = (data) => {
+  return http({
+    url: http.adornUrl('/order/update'),
+    method: 'post',
+    data
+  })
+}
 export { addOrder, list, getLists }

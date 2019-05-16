@@ -6,18 +6,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    tableNum: sessionStorage.getItem("tableNum"),
-    tableNumId: sessionStorage.getItem("tableNumId"),
     userName: sessionStorage.getItem("username"),
     userId: sessionStorage.getItem("userId")
   },
   mutations: {
-    setTable(state, payload) {
-      sessionStorage.setItem("tableNumId", payload.tableNumId)
-      sessionStorage.setItem("tableNum", payload.tableNum)
-      state.tableNumId = payload.tableNumId
-      state.tableNum = payload.tableNum
-    },
     setUserName(state, payload) {
       state.userName = payload
     },

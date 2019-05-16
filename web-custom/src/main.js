@@ -6,7 +6,7 @@ import VueRouter from 'vue-router';
 import VueResource from 'vue-resource';
 import goods from 'components/goods/goods';
 import ratings from 'components/ratings/ratings';
-import seller from 'components/seller/seller';
+import info from 'components/info/info';
 import record from 'components/record/record';
 import LoginAndReg from 'components/login-and-reg/index';
 import layout from 'components/layout/index';
@@ -42,9 +42,9 @@ var router = new VueRouter({
           component: ratings,
         },
         {
-          path: '/seller',
-          name: 'seller',
-          component: seller
+          path: '/info',
+          name: 'info',
+          component: info
         },
         {
           path: '/record',

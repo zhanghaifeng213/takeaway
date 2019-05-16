@@ -32,7 +32,7 @@
       </li>
       <li class="link" v-if="role==0">
         <router-link :to="{name: 'info'}">
-          <i class="el-icon-setting"></i> 用户管理
+          <i class="el-icon-setting"></i> 我的信息
         </router-link>
       </li>
       <li class="link">

@@ -35,18 +35,38 @@
           </tr>
         </table>
       </div>
+      <v-btn v-if="item.status==0" color="info" @click="cancelOrder(item._id)">取消订单</v-btn>
     </div>
+    <v-snackbar
+      v-model="snackbar"
+      :bottom="y === 'bottom'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :right="x === 'right'"
+      :timeout="timeout"
+      :top="y === 'top'"
+      :vertical="mode === 'vertical'"
+    >
+      {{ text }}
+      <v-btn color="pink" flat @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 <script>
-import { getLists } from "@/api/order.js";
+import { getLists, update } from "@/api/order.js";
 import { mapState } from "vuex";
 import { imgUrlFormat } from "@/libs/tool";
 export default {
   data() {
     return {
       lists: [],
-      orderNumbers: []
+      orderNumbers: [],
+      snackbar: false,
+      text: "",
+      y: "top",
+      x: null,
+      mode: "",
+      timeout: 1500
     };
   },
   mounted() {
@@ -55,25 +75,25 @@ export default {
   computed: {},
   methods: {
     getList() {
-      this.orderNumbers = JSON.parse(localStorage.getItem("orderNum"));
+      // this.orderNumbers = JSON.parse(localStorage.getItem("orderNum"));
       getLists().then(res => {
         if (res.data.code == 1) {
           this.lists = res.data.data;
-          this.lists.forEach(el => {
-            if (el.status == 5) {
-              console.log(el.orderNum);
-              let index = this.orderNumbers.indexOf(el.orderNum + "");
-              console.log(index);
-              console.log(this.orderNumbers);
-              this.orderNumbers.splice(index, 1);
-              console.log(this.orderNumbers);
-              localStorage.setItem(
-                "orderNum",
-                JSON.stringify(this.orderNumbers)
-              );
-              // this.getList();
-            }
-          });
+          // this.lists.forEach(el => {
+          //   if (el.status == 5) {
+          //     console.log(el.orderNum);
+          //     let index = this.orderNumbers.indexOf(el.orderNum + "");
+          //     console.log(index);
+          //     console.log(this.orderNumbers);
+          //     this.orderNumbers.splice(index, 1);
+          //     console.log(this.orderNumbers);
+          //     localStorage.setItem(
+          //       "orderNum",
+          //       JSON.stringify(this.orderNumbers)
+          //     );
+          //     // this.getList();
+          //   }
+          // });
         } else {
           this.lists = [];
         }
@@ -106,6 +126,22 @@ export default {
     },
     imgUrlFormat(url) {
       return imgUrlFormat(url);
+    },
+    cancelOrder(orderId) {
+      let data = {
+        orderId,
+        status: 6
+      };
+      update(data).then(res => {
+        if (res.data.code == 1) {
+          this.getList();
+          this.text = "订单取消成功";
+          this.snackbar = true;
+        } else {
+          this.text = "该订单正在进行，取消失败";
+          this.snackbar = true;
+        }
+      });
     }
   }
 };

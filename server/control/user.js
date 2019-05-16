@@ -38,6 +38,26 @@ class User {
     ctx.send('修改成功')
   }
 
+  // 用户修改
+  async updateUserInfo(ctx) {
+    // username: this.name,
+    //       password: this.oldpass,
+    //       newusername: this.newname,
+    //       newpassword: this.pass,
+    //       role: 1
+    const { username, password, newusername, newpassword, role } = ctx.request.body
+    const data = await UserModel.updateOne(
+      { username, password, role },
+      { username: newusername, password: newpassword }
+    )
+    if (data.n > 0) {
+      ctx.send('修改成功')
+    } else {
+      ctx.send('原用户名或密码错误')
+    }
+
+  }
+
   // 用户删除
   async del(ctx) {
     const { user } = ctx.state

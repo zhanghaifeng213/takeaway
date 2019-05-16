@@ -160,6 +160,9 @@ export default {
       update(data).then(res => {
         if (res.data.code == 1) {
           this.getList();
+        } else if (res.data.code == 3) {
+          this.$message.info(res.data.errMsg);
+          this.getList();
         }
       });
     },

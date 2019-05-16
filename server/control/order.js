@@ -77,24 +77,47 @@ class Order {
     }
     // 后台管理更新订单状态
     async update(ctx) {
+        const { user } = ctx.state
         const {
             orderId, // 订单id
             status // 订单状态
         } = ctx.request.body;
-        await OrderModel.updateOne({
-            _id: orderId
-        }, {
-                $set: {
-                    status
-                }
-            }, (err, res) => {
-                if (err) {
-                    ctx.sendError(0, '更新失败')
-                } else {
-                    // 向指定顾客推送soket,更新订单状态
-                    ctx.send('操作成功')
-                }
-            })
+        if (status == 6 && user.role == 1) {
+            await OrderModel.updateOne({
+                _id: orderId,
+                status: 0
+            }, {
+                    $set: {
+                        status: 6
+                    }
+                }, (err, res) => {
+                    if (err) {
+                        return ctx.sendError(0, '更新失败')
+                    } else {
+                        // 向指定顾客推送soket,更新订单状态
+                        return ctx.send('操作成功')
+                    }
+                })
+        } else {
+            await OrderModel.updateOne({
+                _id: orderId, status: { $lt: 5 }
+            }, {
+                    $set: {
+                        status
+                    }
+                }, (err, res) => {
+                    if (err) {
+                        return ctx.sendError(0, '更新失败')
+                    } else {
+                        if (res.n == 0) {
+                            return ctx.sendError(3, '订单已取消')
+                        }
+                        // 向指定顾客推送soket,更新订单状态
+                        return ctx.send('操作成功')
+                    }
+                })
+        }
+
     }
     // 后台管理获取未完成的订单列表
     async list(ctx) {

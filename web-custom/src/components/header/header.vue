@@ -82,7 +82,6 @@ export default {
   },
   computed: {
     ...mapState({
-      tableNum: state => state.tableNum,
       username: state => state.userName
     })
   },

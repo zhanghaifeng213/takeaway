@@ -11,9 +11,9 @@
       <div class="tab-item">
         <router-link :to="{ path: '/record' }">下单记录</router-link>
       </div>
-      <!-- <div class="tab-item">
-          <router-link :to="{ path: '/seller' }">商家</router-link>
-      </div>-->
+      <div class="tab-item">
+          <router-link :to="{ path: '/info' }">我的信息</router-link>
+      </div>
     </div>
     <router-view :seller="seller"></router-view>
   </div>

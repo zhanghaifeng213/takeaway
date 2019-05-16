@@ -156,6 +156,8 @@ Router.get('/upload', user.upload)
     }
  */
 Router.get('/info', user.getinfo)
+Router.post('/updateUserInfo', user.updateUserInfo)
+
 
 
 module.exports = Router;
