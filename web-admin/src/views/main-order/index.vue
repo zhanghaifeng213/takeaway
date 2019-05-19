@@ -26,65 +26,29 @@
       </el-table-column>
       <el-table-column prop="remark" label="备注">
         <template slot-scope="scope">
-          <el-input
-            v-if="scope.row.status==4"
-            type="textarea"
-            :rows="2"
-            placeholder="请输入内容"
-            v-model="scope.row.remark"
-          ></el-input>
+          <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="scope.row.remark"></el-input>
         </template>
       </el-table-column>
       <el-table-column sortable prop="amount" label="订单金额" width="120px">
         <template slot-scope="scope">
-          <el-input
-            v-if="scope.row.status==4"
-            placeholder="请输入内容"
-            type="number"
-            v-model="scope.row.amount"
-          ></el-input>
-          <span v-else>{{scope.row.amount}}</span>
+          <el-input placeholder="请输入内容" type="number" v-model="scope.row.amount"></el-input>
+          <!-- <span v-else>{{scope.row.amount}}</span> -->
         </template>
       </el-table-column>
       <el-table-column label="操作" width="180px">
         <template slot-scope="scope">
           <el-button size="mini" @click="view(scope.row)">查看</el-button>
-          <el-button
-            v-if="scope.row.status==0"
-            size="mini"
-            type="primary"
-            @click="handleFinish(1,scope.row)"
-          >通知后厨</el-button>
-          <el-button
-            v-if="scope.row.status==1"
-            size="mini"
-            type="success"
-            @click="handleFinish(2,scope.row)"
-          >已上菜</el-button>
-          <el-button
-            v-if="scope.row.status==2"
-            size="mini"
-            type="info"
-            @click="handleFinish(3,scope.row)"
-          >菜以上齐</el-button>
-          <el-button
-            v-if="scope.row.status==3"
-            size="mini"
-            type="warning"
-            @click="handleFinish(4,scope.row)"
-          >已结账</el-button>
-          <el-button
-            v-if="scope.row.status==4"
-            size="mini"
-            type="danger"
-            @click="handleFinish(5,scope.row)"
-          >完成</el-button>
+          <el-button v-if="0" size="mini" type="primary" @click="handleFinish(1,scope.row)">通知后厨</el-button>
+          <el-button v-if="0" size="mini" type="success" @click="handleFinish(2,scope.row)">已上菜</el-button>
+          <el-button v-if="0" size="mini" type="info" @click="handleFinish(3,scope.row)">菜以上齐</el-button>
+          <el-button v-if="0" size="mini" type="warning" @click="handleFinish(4,scope.row)">已结账</el-button>
+          <el-button size="mini" type="danger" @click="handleFinish(5,scope.row)">完成</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <audio ref="audio" controls>
+    <!-- <audio ref="audio" controls>
       <source src="../../assets/audio/friendship.mp3" type="audio/mp3">
-    </audio>
+    </audio>-->
     <el-pagination
       background
       @size-change="sizeChangeHandle"
@@ -205,10 +169,10 @@ export default {
   sockets: {
     NEW_ORDER: function(data) {
       this.getList();
-      if (this.$refs.audio) {
-        this.$refs.audio.pause();
-        this.$refs.audio.play();
-      }
+      // if (this.$refs.audio) {
+      //   this.$refs.audio.pause();
+      //   this.$refs.audio.play();
+      // }
     }
   },
   mounted() {

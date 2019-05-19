@@ -1,6 +1,6 @@
 <template>
   <div class="record">
-    <div v-for="item in lists" :key="item.orderNum" class="lists-wrap">
+    <div v-for="(item,index) in lists" :key="index" class="lists-wrap">
       <div class="table-line1">
         <span>
           订单号 :

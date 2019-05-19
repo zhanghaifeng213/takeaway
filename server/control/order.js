@@ -28,51 +28,40 @@ class Order {
             list
         } = ctx.request.body;
         if (list.length === 0) return ctx.sendError(-1, '参数错误');
-        var arr = []
-        if (list.length > 0) {
-            let arrlist = new Array(...list)
-            let len = list.length
-            let count = 0
-            arrlist.forEach(item => {
-                let res = {}
+        // 参数需为数组
+        const resData = await Promise.all(list.map(item => {
+            return new Promise((resolve, reject) => {
                 MenuModel.findById(item.menuItem, (err, data) => {
-                    if (err) {
-                        console.log('err');
-                        console.log(err);
-                    } else {
-                        res.menuDetail = data
-                        count++
-                        if (count == len) {
-                            console.log('emit some_event')
-                            event.emit('some_event')
-                        }
-                    }
+                    resolve({
+                        menuDetail: data,
+                        count: item.count,
+                    })
                 })
-                res.count = item.count
-                arr.push(res)
-            });
-        }
-        event.on('some_event', () => {
-            console.log('on some_event')
-            let amount = 0
-            arr.forEach((item) => {
-                amount += item.count * item.menuDetail.price
+
             })
-            const model = new OrderModel({
-                orderNum,
-                userId: user.id,
-                list: arr,
-                amount,
-                realAmount: amount
-            });
-            model.save((err, data) => {
-                if (err) {
-                    return ctx.sendError(0, '点单失败')
-                } else {
-                    io.emit('NEW_ORDER', data)
-                }
-            });
+        }));
+        let amount = 0
+        resData.forEach(item => {
+            amount += item.menuDetail.price * item.count
+        })
+        const model = new OrderModel({
+            orderNum,
+            userId: user.id,
+            list: resData,
+            amount,
+            realAmount: amount
         });
+        await model.save((err, data) => {
+            if (err) {
+                return ctx.sendError(0, '点单失败')
+            } else {
+                io.emit('NEW_ORDER', data)
+            }
+        });
+        // event.on('some_event', () => {
+        //     console.log('on some_event')
+
+        // });
         ctx.send(orderNum)
     }
     // 后台管理更新订单状态

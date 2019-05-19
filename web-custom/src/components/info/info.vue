@@ -16,6 +16,7 @@
       ></v-text-field>
 
       <v-btn color="success" @click="validate">修改</v-btn>
+      <v-btn color="error" @click="goLogin">退出登陆</v-btn>
     </v-form>
     <v-snackbar
       v-model="snackbar"
@@ -108,13 +109,16 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+    goLogin() {
+      this.$router.push("/");
     }
   }
 };
 </script>
 <style>
 .person-info {
-  padding: 10px;
+  padding: 40px;
 }
 </style>
 

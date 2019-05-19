@@ -25,7 +25,7 @@ export default {
   }),
 
   methods: {
-    ...mapMutations(["setUserName"]),
+    ...mapMutations(["setUserName", "setUserId"]),
     validate() {
       if (this.$refs.form.validate()) {
         let data = {
