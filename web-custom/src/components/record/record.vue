@@ -108,7 +108,7 @@ export default {
           return "已下单";
           break;
         case 1:
-          return "加工中";
+          return "已处理";
           break;
         case 2:
           return "上菜中";

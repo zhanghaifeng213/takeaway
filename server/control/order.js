@@ -115,7 +115,7 @@ class Order {
         } = ctx.query;
         const result = await OrderModel.find({ userId: id, status: { $lt: 5 } }).sort('-created').populate({
             path: 'userId',
-            select: '_id username'
+            select: '_id username realname tel address'
         })
         ctx.send({
             list: result,
@@ -133,7 +133,7 @@ class Order {
         const maxNum = await OrderModel.find({ status: { $lt: 5 } }).countDocuments(true)
         const result = await OrderModel.find({ status: { $lt: 5 } }).sort('-created').populate({
             path: 'userId',
-            select: '_id username'
+            select: '_id username realname tel address'
         }).skip(pageNum * pageSize)
             .limit(pageSize) // mongoose 用于连表查询
         ctx.send({
@@ -152,7 +152,7 @@ class Order {
         const maxNum = await OrderModel.countDocuments({ status: { $eq: 5 } })
         const result = await OrderModel.find({ status: { $eq: 5 } }).sort('-created').populate({
             path: 'userId',
-            select: '_id username'
+            select: '_id username realname tel address'
         }).skip(pageNum * pageSize)
             .limit(pageSize) // mongoose 用于连表查询
         ctx.send({

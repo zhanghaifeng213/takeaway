@@ -1,7 +1,7 @@
 <template>
   <div class="login-and-reg">
     <v-tabs v-model="active" color="cyan" dark slider-color="yellow">
-      <v-tab :key="1" ripple>登陆</v-tab>
+      <v-tab :key="1" ripple>用户登陆</v-tab>
       <v-tab-item :key="1">
         <v-card flat>
           <v-card-text>
@@ -9,7 +9,7 @@
           </v-card-text>
         </v-card>
       </v-tab-item>
-      <v-tab :key="2" ripple>注册</v-tab>
+      <v-tab :key="2" ripple>用户注册</v-tab>
       <v-tab-item :key="2">
         <v-card flat>
           <v-card-text>

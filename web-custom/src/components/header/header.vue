@@ -7,7 +7,7 @@
       <div class="content">
         <div class="title">
           <span class="brand"></span>
-          <span class="name">{{seller.name}}</span>
+          <span class="name">{{sellerName}}</span>
         </div>
         <div class="description">
           {{username}}
@@ -28,7 +28,7 @@
     </div>
     <div class="bulletin-wrapper" @click="showDetail">
       <span class="bulletin-title"></span>
-      <span class="bulletin-text">{{seller.bulletin}}</span>
+      <span class="bulletin-text">{{bulletin}}</span>
       <i class="icon-keyboard_arrow_right"></i>
     </div>
     <div class="background">
@@ -38,7 +38,7 @@
       <div class="detail" v-show="detailShow">
         <div class="detail-wrapper clearfix">
           <div class="detail-main">
-            <h1 class="name">{{seller.name}}</h1>
+            <h1 class="name">{{sellerName}}</h1>
             <div class="star-wrapper">
               <star :size="48" :score="seller.score"></star>
             </div>
@@ -59,7 +59,7 @@
               <div class="line"></div>
             </div>
             <div class="bulletin">
-              <p class="content">{{seller.bulletin}}</p>
+              <p class="content">{{bulletin}}</p>
             </div>
           </div>
         </div>
@@ -74,6 +74,7 @@
 <script>
 import star from "components/star/star";
 import { mapState } from "vuex";
+import { sjinfo } from "@/api/user";
 export default {
   props: {
     seller: {
@@ -87,6 +88,8 @@ export default {
   },
   data() {
     return {
+      sellerName: "",
+      bulletin: "",
       detailShow: false,
       avatar: require("../../common/images/logo.png")
     };
@@ -97,11 +100,22 @@ export default {
     },
     closeDetail() {
       this.detailShow = false;
+    },
+    getInfo() {
+      sjinfo().then(res => {
+        if (res.data.code == 1) {
+          this.sellerName = res.data.data.name;
+          this.bulletin = res.data.data.announcement;
+        }
+      });
     }
   },
   created() {
     this.classMap = ["decrease", "discount", "special", "invoice", "guarantee"];
     console.log(this.$route);
+  },
+  mounted() {
+    this.getInfo();
   },
   components: {
     star
@@ -391,6 +405,7 @@ export default {
             padding: 0 12px;
             line-height: 24px;
             font-size: 12px;
+            overflow: auto;
           }
         }
       }

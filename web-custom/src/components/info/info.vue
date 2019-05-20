@@ -2,6 +2,9 @@
   <div class="person-info">
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-text-field v-model="name" :counter="10" :rules="nameRules" label="用户名" required></v-text-field>
+      <v-text-field v-model="realname" :counter="10" :rules="realnameRules" label="真实姓名" required></v-text-field>
+      <v-text-field v-model="tel" :counter="10" :rules="telRules" label="电话" required></v-text-field>
+      <v-text-field v-model="address" :counter="10" :rules="addressRules" label="地址" required></v-text-field>
 
       <v-text-field v-model="oldpass" :rules="oldpassRules" type="password" label="原密码" required></v-text-field>
       <v-text-field v-model="newname" :counter="10" :rules="newnameRules" label="新用户名" required></v-text-field>
@@ -34,7 +37,7 @@
   </div>
 </template>
 <script>
-import { updateUserInfo } from "@/api/user";
+import { updateUserInfo, info } from "@/api/user";
 import { mapState, mapMutations } from "vuex";
 export default {
   data() {
@@ -44,6 +47,12 @@ export default {
     return {
       valid: true,
       name: "",
+      realname: "",
+      tel: "",
+      address: "",
+      realnameRules: [v => !!v || "姓名不能为空"],
+      telRules: [v => !!v || "电话不能为空"],
+      addressRules: [v => !!v || "地址不能为空"],
       nameRules: [
         v => !!v || "用户名不能为空",
         v => (v && v.length <= 10) || "用户名长度不能超过10"
@@ -74,6 +83,7 @@ export default {
   },
   mounted() {
     this.name = this.username;
+    this.getInfo();
   },
   methods: {
     ...mapMutations(["setUserName"]),
@@ -84,6 +94,9 @@ export default {
           password: this.oldpass,
           newusername: this.newname,
           newpassword: this.pass,
+          realname: this.realname,
+          tel: this.tel,
+          address: this.address,
           role: 1
         };
         updateUserInfo(data).then(res => {
@@ -112,6 +125,15 @@ export default {
     },
     goLogin() {
       this.$router.push("/");
+    },
+    getInfo() {
+      info().then(res => {
+        if (res.data.code == 1) {
+          this.realname = res.data.data.realname;
+          this.tel = res.data.data.tel;
+          this.address = res.data.data.address;
+        }
+      });
     }
   }
 };

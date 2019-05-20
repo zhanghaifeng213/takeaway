@@ -1,8 +1,7 @@
 <template>
   <div class="col-lg-3 login-box">
     <el-tabs v-model="activeName">
-      <el-tab-pane label="登录" name="first">
-        <h5 class="title">用户登录</h5>
+      <el-tab-pane label="商家登录" name="first">
         <el-form ref="loginForm" :model="loginForm" :rules="rules" label-width="70px">
           <el-form-item label="用户名" prop="username">
             <el-input v-model="loginForm.username" placeholder="请输入用户名"></el-input>
@@ -15,8 +14,7 @@
           </el-form-item>
         </el-form>
       </el-tab-pane>
-      <el-tab-pane label="注册" name="second">
-        <h5 class="title">用户注册</h5>
+      <el-tab-pane label="商家注册" name="second">
         <el-form ref="regForm" :model="regForm" :rules="regRules" label-width="70px">
           <el-form-item label="用户名" prop="username">
             <el-input v-model="regForm.username" placeholder="请输入用户名"></el-input>

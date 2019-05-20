@@ -15,6 +15,15 @@
       <el-table-column prop="created" sortable label="下单时间">
         <template slot-scope="scope">{{scope.row.created}}</template>
       </el-table-column>
+      <el-table-column prop="realName" label="姓名">
+        <template slot-scope="scope">{{scope.row.userId.realname}}</template>
+      </el-table-column>
+      <el-table-column prop="tel" label="电话">
+        <template slot-scope="scope">{{scope.row.userId.tel}}</template>
+      </el-table-column>
+      <el-table-column prop="address" sortable label="地址">
+        <template slot-scope="scope">{{scope.row.userId.address}}</template>
+      </el-table-column>
       <el-table-column sortable prop="status" label="订单状态" width="120px">
         <template slot-scope="scope">
           <span v-if="scope.row.status==0">未处理</span>
@@ -24,25 +33,35 @@
           <span v-if="scope.row.status==4">已结账</span>
         </template>
       </el-table-column>
-      <el-table-column prop="remark" label="备注">
+      <!-- <el-table-column prop="remark" label="备注">
         <template slot-scope="scope">
           <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="scope.row.remark"></el-input>
         </template>
-      </el-table-column>
+      </el-table-column>-->
       <el-table-column sortable prop="amount" label="订单金额" width="120px">
         <template slot-scope="scope">
-          <el-input placeholder="请输入内容" type="number" v-model="scope.row.amount"></el-input>
-          <!-- <span v-else>{{scope.row.amount}}</span> -->
+          <!-- <el-input placeholder="请输入内容" type="number" v-model="scope.row.amount"></el-input> -->
+          <span>{{scope.row.amount}}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="180px">
         <template slot-scope="scope">
           <el-button size="mini" @click="view(scope.row)">查看</el-button>
-          <el-button v-if="0" size="mini" type="primary" @click="handleFinish(1,scope.row)">通知后厨</el-button>
+          <el-button
+            v-if="scope.row.status==0"
+            size="mini"
+            type="primary"
+            @click="handleFinish(1,scope.row)"
+          >通知后厨</el-button>
           <el-button v-if="0" size="mini" type="success" @click="handleFinish(2,scope.row)">已上菜</el-button>
           <el-button v-if="0" size="mini" type="info" @click="handleFinish(3,scope.row)">菜以上齐</el-button>
           <el-button v-if="0" size="mini" type="warning" @click="handleFinish(4,scope.row)">已结账</el-button>
-          <el-button size="mini" type="danger" @click="handleFinish(5,scope.row)">完成</el-button>
+          <el-button
+            v-if="scope.row.status==1"
+            size="mini"
+            type="danger"
+            @click="handleFinish(5,scope.row)"
+          >完成</el-button>
         </template>
       </el-table-column>
     </el-table>

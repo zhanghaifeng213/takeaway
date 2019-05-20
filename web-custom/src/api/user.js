@@ -54,4 +54,9 @@ export const updateUserInfo = (data) => {
     data: data
   })
 }
-
+export const sjinfo = () => {
+  return http({
+    url: http.adornUrl('/info/list'),
+    method: 'get',
+  })
+}

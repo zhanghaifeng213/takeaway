@@ -1,13 +1,15 @@
 <template>
-  <v-form ref="form" v-model="valid" lazy-validation>
-    <v-text-field v-model="name" :counter="10" :rules="nameRules" label="用户名" required></v-text-field>
+  <div>
+    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-text-field v-model="name" :counter="10" :rules="nameRules" label="用户名" required></v-text-field>
 
-    <v-text-field v-model="pass" :rules="passRules" type="password" label="密码" required></v-text-field>
+      <v-text-field v-model="pass" :rules="passRules" type="password" label="密码" required></v-text-field>
 
-    <v-btn color="success" @click="validate">登陆</v-btn>
+      <v-btn color="success" @click="validate">登陆</v-btn>
 
-    <v-btn color="error" @click="reset">重置</v-btn>
-  </v-form>
+      <v-btn color="error" @click="reset">重置</v-btn>
+    </v-form>
+  </div>
 </template>
 <script>
 import { login, info } from "@/api/user";

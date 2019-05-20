@@ -19,6 +19,9 @@ class User {
     const user = new UserModel({
       username: data.username,
       password: data.password,
+      realname: data.realname,
+      tel: data.tel,
+      address: data.address,
       role: data.role
     })
     const result = await user.save()
@@ -45,10 +48,10 @@ class User {
     //       newusername: this.newname,
     //       newpassword: this.pass,
     //       role: 1
-    const { username, password, newusername, newpassword, role } = ctx.request.body
+    const { username, password, newusername, newpassword, role, realname, tel, address } = ctx.request.body
     const data = await UserModel.updateOne(
       { username, password, role },
-      { username: newusername, password: newpassword }
+      { username: newusername, password: newpassword, realname, tel, address }
     )
     if (data.n > 0) {
       ctx.send('修改成功')
@@ -182,7 +185,10 @@ class User {
         id: user._id,
         username: user.username,
         role: user.role,
-        avatar: user.avatar
+        avatar: user.avatar,
+        realname: user.realname,
+        tel: user.tel,
+        address: user.address
       }
       return ctx.send(result)
     } else {
